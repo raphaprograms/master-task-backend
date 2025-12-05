@@ -8,9 +8,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
-  githubId: {
-    type: String,
-  },
+  // githubId: {
+  //   type: String,
+  // },
   username: {
     type: String,
     required: true,
