@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const Project = require('../models/Project')
 
 const secret = process.env.JWT_SECRET;
 const expiration = "24h";
@@ -29,6 +30,33 @@ function authMiddleware(req, res, next) {
   next();
 }
 
+async function getProjectMiddleware(req, res, next) {
+  try {
+    const { projectId } = req.params;
+
+    if (!projectID) {
+      return res.status(400).json({ message: "Can't find the project ID on this path"})
+    }
+
+    const project = await Project.findById(projectId);
+
+    if(!project) {
+      res.status(404).json({message: `Project with id: ${projectId} not found!`});
+    }
+
+    if (project.user.toString() !== req.user._id) {
+      return res.status(403).json({ message: 'User is not authorized to managage tasks for this project!'});
+    }
+
+    req.project = project;
+    next();
+
+  } catch (error) {
+    console.error('Error in getProjectMiddleware:', error);
+    res.status(500).json({error: 'Server error finding project' });
+  }
+}
+
 // A middleware to check for admin role
 function adminOnly(req, res, next) {
   if (req.user && req.user.role === 'admin') {
@@ -47,5 +75,6 @@ function signToken({ username, email, _id }) {
 module.exports = {
   authMiddleware,
   adminOnly,
-  signToken
+  signToken,
+  getProjectMiddleware
 };

@@ -4,6 +4,7 @@ const {
   getUserById,
   registerUser,
   loginUser,
+  logoutUser,
 } = require("../controllers/userController");
 
 const { authMiddleware, adminOnly, signToken } = require("../middleware/auth");
@@ -31,6 +32,8 @@ userRouter.post("/register", registerUser);
  * POST /api/user/login
  */
 userRouter.post("/login", loginUser);
+
+userRouter.get('/logout', logoutUser);
 
 // Route to start the OAuth flow
 // When a user visits this URL, they will be redirected to GitHub to log in.

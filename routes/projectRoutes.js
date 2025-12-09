@@ -7,6 +7,10 @@ const projectRouter = express.Router();
 // Protects all rotes in this router
 projectRouter.use(authMiddleware);
 
+const taskRoutes = require('./taskRoutes');
+
+projectRouter.use('/:projectId/tasks', taskRoutes);
+
 /**
  * GET /api/projects
  */

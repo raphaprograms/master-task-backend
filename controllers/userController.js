@@ -81,9 +81,20 @@ async function loginUser(req, res) {
   }
 }
 
+async function logoutUser(req, res) {
+  try {
+    
+    res.status(200).json({ message: `Logged out!`});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: `An error occured during logout.`});
+  }
+}
+
 module.exports = {
   getAllUsers,
   getUserById,
   registerUser,
   loginUser,
+  logoutUser,
 };
