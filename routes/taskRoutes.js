@@ -1,11 +1,13 @@
 const express = require("express");
-const { authMiddleware } = require("../middleware/auth");
+const { authMiddleware, getProjectMiddleware } = require("../middleware/auth");
 const Task = require("../models/Task");
 
 const taskRouter = express.Router({ mergeParams: true });
 
 // Protects all rotes in this router
 taskRouter.use(authMiddleware);
+
+taskRouter.use(getProjectMiddleware);
 
 /**
  * GET /api/projects/:projectId/tasks
@@ -36,10 +38,10 @@ taskRouter.get("/:taskId", async (req, res) => {
     }
 
     // Authorization
-    console.log(req.project._id);
-    console.log(task.project);
+    console.log('from req', req.project._id);
+    console.log('from tas', task.project);
     
-    if (task.project.toString() !== req.project._id) {
+    if (task.project.toString() !== req.project._id.toString()) {
       return res.status(403).json({ message: "This task doesn't belong to the current project" });
     }
 
@@ -80,7 +82,10 @@ taskRouter.put("/:taskId", async (req, res) => {
       return res.status(404).json({ message: 'No task to update found with this id!' });
     }
 
-    if(req.project._id !== taskToUpdate.project.toString()) {
+    console.log('from req', req.project._id);
+    console.log('from tas', taskToUpdate.project);
+
+    if(req.project._id.toString() !== taskToUpdate.project.toString()) {
       
       return res.status(403).json({ message: 'This is not your task!' });
     }
@@ -103,7 +108,7 @@ taskRouter.delete("/:taskId", async (req, res) => {
     // This needs an authorization check
     const taskToDelete = await Task.findById(req.params.taskId)
 
-       if(req.project._id !== taskToDelete.project.toString()) {
+       if(req.project._id.toString() !== taskToDelete.project.toString()) {
       
       return res.status(403).json({ message: 'This is not your task!' });
     }

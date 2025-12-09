@@ -34,7 +34,7 @@ async function getProjectMiddleware(req, res, next) {
   try {
     const { projectId } = req.params;
 
-    if (!projectID) {
+    if (!projectId) {
       return res.status(400).json({ message: "Can't find the project ID on this path"})
     }
 
