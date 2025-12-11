@@ -34,7 +34,7 @@ npm install
 3. Create a `.env` file in the root directory
 
 4. Start the server
-npm startThe API will be running at `http://localhost:5000`
+npm startThe API will be running at `http://localhost:4000`
 
 ## API Endpoints
 
