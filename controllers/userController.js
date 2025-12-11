@@ -83,7 +83,6 @@ async function loginUser(req, res) {
 
 async function logoutUser(req, res) {
   try {
-    
     res.status(200).json({ message: `Logged out!`});
   } catch (error) {
     console.error(error);
