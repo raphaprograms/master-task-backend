@@ -70,7 +70,7 @@ npm startThe API will be running at `http://localhost:5000`
 
 | Variable | Description |
 |----------|-------------|
-| `PORT` | Server port (default: 5000) |
+| `PORT` | Server port (default: 4000) |
 | `MONGO_URI` | MongoDB connection string |
 | `JWT_SECRET` | Secret key for JWT signing |
 | `FRONTEND_URL` | Frontend URL for CORS |
